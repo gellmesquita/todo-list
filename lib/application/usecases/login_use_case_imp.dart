@@ -16,4 +16,16 @@ class LoginUseCaseImp implements LoginUseCase {
     throw UnimplementedError();
   }
   
+  @override
+  Future<ActivitiesEntity> deleteActivity({required id}) {
+    // TODO: implement deleteActivity
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<ActivitiesEntity> editActivity({required String description, required id}) {
+    // TODO: implement editActivity
+    throw UnimplementedError();
+  }
+  
 }
