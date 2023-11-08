@@ -12,7 +12,6 @@ class NavigationServiceImp implements NavigationService{
   
   @override
   void navigateToActivies() {
-    // TODO: implement navigateToActivies
     Modular.to.pushNamed(
       Routes.loginRoute,
     );

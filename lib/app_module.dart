@@ -1,10 +1,12 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:login_app/application/resources/app_routes.dart' as Routes;
+import 'package:login_app/application/usecases/login_use_case_imp.dart';
 import 'package:login_app/data/repositories/login_repository_imp.dart';
 import 'package:login_app/data/webservices/implementation/login_webservice_imp.dart';
 import 'package:login_app/data/webservices/login_webservice.dart';
 import 'package:login_app/data/webservices/test/login_webservice_test.dart';
 import 'package:login_app/domain/repositories/login_repository.dart';
+import 'package:login_app/domain/usecases/login_use_case.dart';
 import 'package:login_app/presenter/controllers/information_capture_controller.dart';
 import 'package:login_app/presenter/controllers/login_controller.dart';
 import 'package:login_app/presenter/views/information_capture_view.dart';
@@ -17,6 +19,7 @@ class AppModule extends Module{
     AppDependencies.controllerDependencies(i);
     AppDependencies.repositoryDependencies(i);
     AppDependencies.webServiceDependencies(i);
+    AppDependencies.useCaseDependencies(i);
   }
 
   @override
@@ -49,6 +52,10 @@ class AppDependencies {
 
   static repositoryDependencies(Injector i){
     i.add<LoginRepository>(LoginRepositoryImp.new);
+  }
+
+  static useCaseDependencies(Injector i){
+    i.add<LoginUseCase>(LoginUseCaseImp.new);
   }
 
 }
