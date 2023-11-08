@@ -15,6 +15,7 @@ dependencies:
   flutter_modular: ^6.3.2
   json_annotation: ^4.8.1
   build_runner: ^2.0.5
+  drift: ^2.13.1
 
 dev_dependencies:
   flutter_test:
