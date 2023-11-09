@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:login_app/application/resources/app_color.dart';
 import 'package:login_app/application/resources/app_constants.dart';
+import 'package:login_app/application/resources/size_utils.dart';
 import 'package:login_app/presenter/controllers/login_controller.dart';
 
 class LoginView extends StatefulWidget {
@@ -20,12 +21,15 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: DP14
+          ),
           width: double.infinity,
           child:  Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children:  [
-              SizedBox(
-                height: 50,
+              const SizedBox(
+                height: DP50,
               ),
               Image.asset(
                 IMAGELOGO
@@ -33,14 +37,14 @@ class _LoginViewState extends State<LoginView> {
               const Text(
                 "Faça seu login",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: DP16,
                   fontWeight: FontWeight.w600
                 ),
               ),
               const Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(DP8),
                 child: Text(
-                  "Faça seu login e desfrute da experincia conosco, digite sua senha e password",
+                  "Faça seu login e desfrute da experincia conosco",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400, 
@@ -50,116 +54,58 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: DP20,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Username",
-                    textAlign: TextAlign.start,
-                  ),
-                  Container(
-                    width: 350,
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 10
-                    ),
-                    child: TextField(
-                      controller: _passwordController,
-                      style: const TextStyle(
-                        fontSize:14,
-                        color: gray800,
-                        fontWeight: FontWeight.w900
-                      ),
-                      cursorColor: gray500,
-                      decoration: InputDecoration(
-                        hintText: "Digite o username",
-                        hintStyle: const TextStyle(
-                          fontSize:14,
-                          color: gray500,
-                          fontWeight: FontWeight.w300
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: borderRadius
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:const  BorderSide( 
-                            color: Colors.grey,
-                            width: 2
-                          ),
-                          borderRadius: borderRadius
-                        ),
-                      ),
-                      keyboardType: TextInputType.text,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          _passwordRegExp, 
-                          replacementString:""
-                        )
-                      ],
-                    ),
+              inputTextField(
+                label: "Username", 
+                hintText: "username",
+                controller: _usernameController, 
+                isPassword: false, 
+                suffix: const Icon(
+                  Icons.person,
+                  color: Colors.grey,
                 ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    _passwordRegExp, 
+                    replacementString:""
+                  )
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Username",
-                    textAlign: TextAlign.start,
-                  ),
-                  Container(
-                    width: 350,
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 10
-                    ),
-                    child: TextField(
-                      controller: _passwordController,
-                      style: const TextStyle(
-                        fontSize:14,
-                        color: gray800,
-                        fontWeight: FontWeight.w900
-                      ),
-                      cursorColor: gray500,
-                      decoration: InputDecoration(
-                        hintText: "Digite o username",
-                        hintStyle: const TextStyle(
-                          fontSize:14,
-                          color: gray500,
-                          fontWeight: FontWeight.w300
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: borderRadius
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:const  BorderSide( 
-                            color: Colors.grey,
-                            width: 2
-                          ),
-                          borderRadius: borderRadius
-                        ),
-                      ),
-                      keyboardType: TextInputType.text,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          _passwordRegExp, 
-                          replacementString:""
-                        )
-                      ],
-                    ),
-                ),
+              inputTextField(
+                label: "Senha", 
+                hintText: "Senha",
+                controller: _passwordController, 
+                isPassword: true, 
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    _passwordRegExp, 
+                    replacementString:""
+                  )
                 ],
               ),
-              SizedBox(
-                height: 20,
+              const SizedBox(
+                height: DP4,
+              ),
+              const Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: DP4
+                    ),
+                    child: InkWell(
+                      child: Text(
+                        "Esqueceu a senha ?",
+                         style: TextStyle(
+                          color: primary800
+                         ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: DP20,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -177,26 +123,29 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 child: Container(
                   alignment: Alignment.center,
-                  height: 20,
-                  width: 150,
-      
-                  margin: EdgeInsets.symmetric(
-                    vertical: 20
+                  height: DP20,
+                  width: DP150,
+                  margin:const EdgeInsets.symmetric(
+                    vertical: DP20
                   ),
-                  child: Text(
+                  child: const Text(
                     "Entrar"
                   ),
                 ),
               ),
+              const SizedBox(
+                height: DP80,
+              ),
               InkWell(
                 onTap: () {
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 100
-                  ),
-                  child: Text(
-                    "Politicas de privacidade"
+                child: Container(
+                  padding: EdgeInsets.all(DP12),
+                  child: const Text(
+                    "Politicas de privacidade",
+                    style: TextStyle(
+                      color: gray500
+                    ),
                   ),
                 ),
               )
@@ -205,5 +154,59 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  Column inputTextField({String? label, String? hintText, Widget? suffix, required bool isPassword, required TextEditingController controller, List<TextInputFormatter>? inputFormatters}) {
+    return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label ?? "",
+                  textAlign: TextAlign.start,
+                ),
+                Container(
+                  width: 350,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: DP10
+                  ),
+                  child: TextField(
+                    controller: controller,
+                    style: const TextStyle(
+                      fontSize:DP14,
+                      color: gray800,
+                      fontWeight: FontWeight.w900
+                    ),
+                    cursorColor: gray500,
+                    decoration: InputDecoration(
+                      hintText: hintText,
+                      hintStyle: const TextStyle(
+                        fontSize:14,
+                        color: gray500,
+                        fontWeight: FontWeight.w300
+                      ),
+                      suffixIcon: suffix,
+                      
+                      border: OutlineInputBorder(
+                        borderRadius: borderRadius
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:const  BorderSide( 
+                          color: Colors.grey,
+                          width: 2
+                        ),
+                        borderRadius: borderRadius
+                      ),
+                    ),
+                    keyboardType: TextInputType.text,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        _passwordRegExp, 
+                        replacementString:""
+                      )
+                    ],
+                  ),
+              ),
+              ],
+            );
   }
 }
