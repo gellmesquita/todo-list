@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:login_app/app_module.dart';
+import 'package:login_app/application/resources/app_theme.dart';
 
 
 void main() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: Modular.routerConfig,
+      theme: AppTheme.appTheme,
     );
   }
 }

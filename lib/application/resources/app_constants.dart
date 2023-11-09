@@ -1,0 +1,1 @@
+const IMAGELOGO = "assets/image/target_sistemas.png";

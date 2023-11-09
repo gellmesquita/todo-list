@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:login_app/application/resources/app_color.dart';
+import 'package:login_app/application/resources/app_constants.dart';
 import 'package:login_app/presenter/controllers/login_controller.dart';
 
 class LoginView extends StatefulWidget {
@@ -21,29 +23,58 @@ class _LoginViewState extends State<LoginView> {
         child:  Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children:  [
-            Text(
-              "Faça seu login"
+            Image.asset(
+              IMAGELOGO
             ),
-           SizedBox(
-            height: 20,
-           ),
+            const Text(
+              "Faça seu login",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600
+              ),
+            ),
+            const Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Faça seu login e desfrute da experincia conosco, digite sua senha e password",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400, 
+                  color: gray600
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Username",
                   textAlign: TextAlign.start,
                 ),
                 Container(
                   width: 350,
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                     vertical: 10
                   ),
                   child: TextField(
                     controller: _passwordController,
+                    style: const TextStyle(
+                      fontSize:14,
+                      color: gray500,
+                      fontWeight: FontWeight.w800
+                    ),
                     decoration: InputDecoration(
                       hintText: "Digite o username",
-                      prefixIcon: Icon(
+                      hintStyle: const TextStyle(
+                        fontSize:14,
+                        color: gray500,
+                        fontWeight: FontWeight.w300
+                      ),
+                      prefixIcon: const Icon(
                         Icons.person,
                         color: Colors.grey,
                       ),
@@ -51,18 +82,18 @@ class _LoginViewState extends State<LoginView> {
                         borderRadius: BorderRadius.circular(10)
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide( 
+                        borderSide:const  BorderSide( 
                           color: Colors.grey,
                           width: 2
                         ),
                         borderRadius: BorderRadius.circular(10) 
-                      )
+                      ),
+
                     ),
                     keyboardType: TextInputType.text,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(_passwordRegExp)
                     ],
-
                   ),
               ),
               ],
