@@ -58,25 +58,26 @@ class _LoginViewState extends State<LoginView> {
               ),
               inputTextField(
                 label: "Username", 
-                hintText: "username",
+                
+                hintText: "Username",
                 controller: _usernameController, 
-                isPassword: false, 
                 suffix: const Icon(
                   Icons.person,
                   color: Colors.grey,
                 ),
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                    _passwordRegExp, 
-                    replacementString:""
-                  )
+                  TextInputFormatter.withFunction(
+                    (TextEditingValue oldValue, TextEditingValue newValue) {
+                      return _passwordRegExp.hasMatch(newValue.text) ? newValue : oldValue;
+                    },
+                  ),
                 ],
               ),
-              inputTextField(
+              inputTextFieldPassword(
                 label: "Senha", 
                 hintText: "Senha",
+                isVisible: true,
                 controller: _passwordController, 
-                isPassword: true, 
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
                     _passwordRegExp, 
@@ -137,8 +138,6 @@ class _LoginViewState extends State<LoginView> {
                 height: DP80,
               ),
               InkWell(
-                onTap: () {
-                },
                 child: Container(
                   padding: EdgeInsets.all(DP12),
                   child: const Text(
@@ -156,7 +155,56 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Column inputTextField({String? label, String? hintText, Widget? suffix, required bool isPassword, required TextEditingController controller, List<TextInputFormatter>? inputFormatters}) {
+  Widget inputTextField({String? label, String? hintText, Widget? suffix, required TextEditingController controller, List<TextInputFormatter>? inputFormatters}) {
+    return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label ?? "",
+                  textAlign: TextAlign.start,
+                ),
+                Container(
+                  width: 350,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: DP10
+                  ),
+                  child: TextField(
+                    controller: controller,
+                    style: const TextStyle(
+                      fontSize:DP14,
+                      color: gray800,
+                      fontWeight: FontWeight.w900
+                    ),
+                    maxLength: 3,
+                    cursorColor: gray500,
+                    decoration: InputDecoration(
+                      hintText: hintText,
+                      hintStyle: const TextStyle(
+                        fontSize:14,
+                        color: gray500,
+                        fontWeight: FontWeight.w300
+                      ),
+                      suffixIcon: suffix,
+                      border: OutlineInputBorder(
+                        borderRadius: borderRadius
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:const  BorderSide( 
+                          color: Colors.grey,
+                          width: 2
+                        ),
+                        borderRadius: borderRadius
+                      ),
+                    ),
+                    keyboardType: TextInputType.text,
+                    inputFormatters: inputFormatters,
+                  ),
+              ),
+              ],
+            );
+  }
+
+ Widget inputTextFieldPassword({String? label, String? hintText, required TextEditingController controller, List<TextInputFormatter>? inputFormatters,required bool isVisible}) {
     return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -177,6 +225,7 @@ class _LoginViewState extends State<LoginView> {
                       fontWeight: FontWeight.w900
                     ),
                     cursorColor: gray500,
+                    obscureText: isVisible,
                     decoration: InputDecoration(
                       hintText: hintText,
                       hintStyle: const TextStyle(
@@ -184,8 +233,18 @@ class _LoginViewState extends State<LoginView> {
                         color: gray500,
                         fontWeight: FontWeight.w300
                       ),
-                      suffixIcon: suffix,
-                      
+                      suffixIcon:  InkWell(
+                        onTap: () {
+                          
+                        },
+                        child: !isVisible ? const Icon(
+                          Icons.visibility,
+                          color: gray500,
+                        ): const Icon(
+                          Icons.visibility_off,
+                          color: gray500,
+                        ),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: borderRadius
                       ),
@@ -197,13 +256,8 @@ class _LoginViewState extends State<LoginView> {
                         borderRadius: borderRadius
                       ),
                     ),
-                    keyboardType: TextInputType.text,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        _passwordRegExp, 
-                        replacementString:""
-                      )
-                    ],
+                    keyboardType: TextInputType.visiblePassword,
+                    inputFormatters: inputFormatters,   
                   ),
               ),
               ],
