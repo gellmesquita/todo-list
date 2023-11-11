@@ -4,6 +4,8 @@ import 'package:login_app/application/resources/app_color.dart';
 import 'package:login_app/application/resources/app_constants.dart';
 import 'package:login_app/application/resources/size_utils.dart';
 import 'package:login_app/presenter/controllers/login_controller.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key, required this.controller});
@@ -56,34 +58,38 @@ class _LoginViewState extends State<LoginView> {
               const SizedBox(
                 height: DP20,
               ),
-              inputTextField(
-                label: "Username", 
-                
-                hintText: "Username",
-                controller: _usernameController, 
-                suffix: const Icon(
-                  Icons.person,
-                  color: Colors.grey,
-                ),
-                inputFormatters: [
-                  TextInputFormatter.withFunction(
-                    (TextEditingValue oldValue, TextEditingValue newValue) {
-                      return _passwordRegExp.hasMatch(newValue.text) ? newValue : oldValue;
-                    },
+              Observer(
+                builder: (context) => inputTextField(
+                  onChanged: widget.controller.onChangeUsername,
+                  label: "Username", 
+                  errorText: widget.controller.errorUsername,
+                  hintText: "Username",
+                  controller: _usernameController, 
+                  suffix: const Icon(
+                    Icons.person,
+                    color: Colors.grey,
                   ),
-                ],
+                  inputFormatters: [],
+                )
               ),
-              inputTextFieldPassword(
-                label: "Senha", 
-                hintText: "Senha",
-                isVisible: true,
-                controller: _passwordController, 
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                    _passwordRegExp, 
-                    replacementString:""
-                  )
-                ],
+              Observer(
+                builder: (context) => inputTextField(
+                  onChanged: widget.controller.onChangePassword,
+                  label: "Senha", 
+                  errorText: widget.controller.errorPassword,
+                  hintText: "Senha",
+                  isPassword: true,
+                  changeVisible: widget.controller.setVisiblePassword,
+                  isVisible: widget.controller.visiblePassword,
+                  controller: _passwordController, 
+                  inputFormatters: [
+                    TextInputFormatter.withFunction(
+                      (TextEditingValue oldValue, TextEditingValue newValue) {
+                        return _passwordRegExp.hasMatch(newValue.text) ? newValue : oldValue;
+                      },
+                    ),
+                  ],
+                )
               ),
               const SizedBox(
                 height: DP4,
@@ -108,14 +114,17 @@ class _LoginViewState extends State<LoginView> {
               const SizedBox(
                 height: DP20,
               ),
-              ElevatedButton(
+              Observer(
+                builder: (context) => ElevatedButton(
                 onPressed: () {
-                  
+                  widget.controller.validateData();
+
                 },
                 style: ButtonStyle(
                   backgroundColor: const MaterialStatePropertyAll(
                     red800
                   ),
+                  
                   shape: MaterialStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: borderRadius
@@ -133,6 +142,7 @@ class _LoginViewState extends State<LoginView> {
                     "Entrar"
                   ),
                 ),
+              ),
               ),
               const SizedBox(
                 height: DP80,
@@ -155,7 +165,19 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget inputTextField({String? label, String? hintText, Widget? suffix, required TextEditingController controller, List<TextInputFormatter>? inputFormatters}) {
+  Widget inputTextField({
+    String? label,
+    required Function(String)? onChanged,  
+    int maxLength=20,
+    String? hintText, 
+    Widget? suffix, 
+    required TextEditingController controller, 
+    List<TextInputFormatter>? inputFormatters, 
+    bool isVisible=false, 
+    bool isPassword=false, 
+    String? errorText, 
+    Function? changeVisible
+  }) {
     return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -170,72 +192,28 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   child: TextField(
                     controller: controller,
+                    onChanged: onChanged,
                     style: const TextStyle(
                       fontSize:DP14,
                       color: gray800,
                       fontWeight: FontWeight.w900
                     ),
-                    maxLength: 3,
+                    maxLength: maxLength,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     cursorColor: gray500,
                     decoration: InputDecoration(
                       hintText: hintText,
+                      errorText: errorText!.isNotEmpty ? errorText : null,
+                      errorMaxLines: 2,
                       hintStyle: const TextStyle(
                         fontSize:14,
                         color: gray500,
                         fontWeight: FontWeight.w300
                       ),
-                      suffixIcon: suffix,
-                      border: OutlineInputBorder(
-                        borderRadius: borderRadius
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:const  BorderSide( 
-                          color: Colors.grey,
-                          width: 2
-                        ),
-                        borderRadius: borderRadius
-                      ),
-                    ),
-                    keyboardType: TextInputType.text,
-                    inputFormatters: inputFormatters,
-                  ),
-              ),
-              ],
-            );
-  }
-
- Widget inputTextFieldPassword({String? label, String? hintText, required TextEditingController controller, List<TextInputFormatter>? inputFormatters,required bool isVisible}) {
-    return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label ?? "",
-                  textAlign: TextAlign.start,
-                ),
-                Container(
-                  width: 350,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: DP10
-                  ),
-                  child: TextField(
-                    controller: controller,
-                    style: const TextStyle(
-                      fontSize:DP14,
-                      color: gray800,
-                      fontWeight: FontWeight.w900
-                    ),
-                    cursorColor: gray500,
-                    obscureText: isVisible,
-                    decoration: InputDecoration(
-                      hintText: hintText,
-                      hintStyle: const TextStyle(
-                        fontSize:14,
-                        color: gray500,
-                        fontWeight: FontWeight.w300
-                      ),
-                      suffixIcon:  InkWell(
+                      counterText: '',
+                      suffixIcon: !isPassword ? suffix : InkWell(
                         onTap: () {
-                          
+                          changeVisible!();
                         },
                         child: !isVisible ? const Icon(
                           Icons.visibility,
@@ -256,11 +234,12 @@ class _LoginViewState extends State<LoginView> {
                         borderRadius: borderRadius
                       ),
                     ),
-                    keyboardType: TextInputType.visiblePassword,
-                    inputFormatters: inputFormatters,   
+                    keyboardType: TextInputType.text,
+                    inputFormatters: inputFormatters,
                   ),
               ),
               ],
             );
   }
+
 }
