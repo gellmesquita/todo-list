@@ -13,8 +13,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final RegExp _passwordRegExp = RegExp(r'^[a-zA-Z0-9]*$');
   @override
   Widget build(BuildContext context) {
