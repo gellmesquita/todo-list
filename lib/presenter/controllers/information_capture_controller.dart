@@ -9,6 +9,4 @@ class InformationCaptureController = _InformationCaptureControllerBase with _$In
 
 abstract class _InformationCaptureControllerBase with Store {
   
- 
-  
 }
