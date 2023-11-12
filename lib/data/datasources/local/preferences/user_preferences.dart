@@ -17,7 +17,7 @@ class UserPreferences {
     _preferences=  await SharedPreferences.getInstance();
   }
 
-  Future<bool> saveActivities(UserEntity user) async {
+  Future<bool> saveUser(UserEntity user) async {
     try {
       String userJson = jsonEncode(user.toJson());
       _preferences.setString(USERPREFERENCES, userJson);

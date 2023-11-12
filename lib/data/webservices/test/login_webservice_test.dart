@@ -1,9 +1,9 @@
 // ignore_for_file: dead_code
-import 'package:login_app/data/webservices/login_webservice.dart';
+import 'package:login_app/data/webservices/user_webservice.dart';
 import 'package:login_app/data/webservices/test/mockitos.dart';
 import 'package:login_app/domain/entities/user_entity.dart';
 
-class LoginWebserviceTest extends LoginWebservice{
+class UserWebserviceTest extends UserWebservice{
   @override
   Future<UserEntity> login({required String name, required String password}) {
     // TODO: implement login
