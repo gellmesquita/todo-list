@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:login_app/application/resources/app_routes.dart' as Routes;
+import 'package:login_app/application/services/navigation_service_imp.dart';
 import 'package:login_app/application/usecases/user_use_case_imp.dart';
 import 'package:login_app/data/datasources/local/preferences/activity_preferences.dart';
 import 'package:login_app/data/datasources/local/preferences/user_preferences.dart';
@@ -10,6 +11,7 @@ import 'package:login_app/data/webservices/user_webservice.dart';
 import 'package:login_app/data/webservices/test/login_webservice_test.dart';
 import 'package:login_app/domain/repositories/activity_repository.dart';
 import 'package:login_app/domain/repositories/user_repository.dart';
+import 'package:login_app/domain/services/navigation_service.dart';
 import 'package:login_app/domain/usecases/user_use_case.dart';
 import 'package:login_app/presenter/controllers/information_capture_controller.dart';
 import 'package:login_app/presenter/controllers/login_controller.dart';
@@ -25,6 +27,7 @@ class AppModule extends Module{
     AppDependencies.webServiceDependencies(i);
     AppDependencies.useCaseDependencies(i);
     AppDependencies.preferencesDependencies(i);
+    AppDependencies.navigationServicesDependencies(i);
   }
 
   @override
@@ -56,6 +59,10 @@ class AppDependencies {
     i.add(InformationCaptureController.new);
   }
 
+  static navigationServicesDependencies(Injector i){
+    i.add<NavigationService>(NavigationServiceImp.new);
+  }
+
   static preferencesDependencies(Injector i){
     i.add(UserPreferences.new);
     i.add(ActivityPreferences.new);
@@ -67,7 +74,7 @@ class AppDependencies {
   }
 
   static useCaseDependencies(Injector i){
-    i.add<UserUseCase>(UserRepositoryImp.new);
+    i.add<UserUseCase>(UserUseCaseImp.new);
   }
 
 }
