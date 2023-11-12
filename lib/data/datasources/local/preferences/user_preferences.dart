@@ -45,4 +45,13 @@ class UserPreferences {
     }
   }
 
+  static Future<bool> doesUserExist() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return prefs.containsKey(USERPREFERENCES);
+    } catch (e) {
+      return false;
+    }
+  }
+
 }

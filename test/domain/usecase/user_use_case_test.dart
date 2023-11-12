@@ -6,7 +6,8 @@ import 'package:login_app/data/repositories/activity_repository_imp.dart';
 import 'package:login_app/data/repositories/user_repository_imp.dart';
 import 'package:login_app/data/webservices/implementation/user_webservice_imp.dart';
 import 'package:login_app/domain/entities/user_entity.dart';
-import 'package:login_app/domain/repositories/activity_repository.dart';
+
+
 void main() {
   final usecase = UserUseCaseImp(
     activityRepository: ActvityRepositoryImp(

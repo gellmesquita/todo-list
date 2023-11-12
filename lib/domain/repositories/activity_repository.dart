@@ -1,5 +1,4 @@
 import 'package:login_app/domain/entities/activities_entity.dart';
-import 'package:login_app/domain/entities/user_entity.dart';
 
 abstract class ActivityRepository {
   Future<bool> addActivity(ActivitiesEntity activity);

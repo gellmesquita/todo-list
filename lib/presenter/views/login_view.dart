@@ -5,7 +5,7 @@ import 'package:login_app/application/resources/app_constants.dart';
 import 'package:login_app/application/resources/size_utils.dart';
 import 'package:login_app/presenter/controllers/login_controller.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
+
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key, required this.controller});
@@ -46,7 +46,7 @@ class _LoginViewState extends State<LoginView> {
               const Padding(
                 padding: const EdgeInsets.all(DP8),
                 child: Text(
-                  "Faça seu login e desfrute da experincia conosco",
+                  "Faça seu login e desfrute da experiencia conosco",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400, 
@@ -118,7 +118,6 @@ class _LoginViewState extends State<LoginView> {
                 builder: (context) => ElevatedButton(
                 onPressed: () {
                   widget.controller.validateData();
-
                 },
                 style: ButtonStyle(
                   backgroundColor: const MaterialStatePropertyAll(
@@ -192,6 +191,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   child: TextField(
                     controller: controller,
+                    obscureText: isVisible,
                     onChanged: onChanged,
                     style: const TextStyle(
                       fontSize:DP14,

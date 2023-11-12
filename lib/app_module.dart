@@ -38,6 +38,7 @@ class AppModule extends Module{
       Routes.activityRoute, 
       child: (context) => InformationCaptureView(controller: Modular.get()),
       transition: TransitionType.rightToLeft,
+      guards: [AuthGuard()]
     );
   }
   
@@ -69,4 +70,19 @@ class AppDependencies {
     i.add<UserUseCase>(UserUseCaseImp.new);
   }
 
+}
+
+class AuthGuard extends RouteGuard{
+  AuthGuard() : super(redirectTo:  Routes.loginRoute);
+  //final UserPreferences authService = Modular.get();
+  @override
+  Future<bool> canActivate(String path, ModularRoute router)async {
+    var user =await UserPreferences.doesUserExist();
+    if (user) {
+      return true;
+    } else {
+      Modular.to.navigate(Routes.loginRoute);
+      return false;
+    }
+  }
 }
