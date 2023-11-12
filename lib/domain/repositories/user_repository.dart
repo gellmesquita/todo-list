@@ -1,6 +1,6 @@
 import 'package:login_app/domain/entities/user_entity.dart';
 
-abstract class LoginRepository {
+abstract class UserRepository {
   Future<UserEntity> login({ required String  name , required String password});
   
 }

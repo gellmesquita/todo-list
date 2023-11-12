@@ -1,4 +1,4 @@
-import 'package:login_app/data/data_access/network/response/base_response.dart';
+import 'package:login_app/data/datasources/network/response/base_response.dart';
 
 abstract class BaseWebservice {
   Future<T> request<R extends BaseResponse, T>(
