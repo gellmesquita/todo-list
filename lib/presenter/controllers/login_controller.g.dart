@@ -25,6 +25,22 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  late final _$isLoadingAtom =
+      Atom(name: '_LoginControllerBase.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
   late final _$visiblePasswordAtom =
       Atom(name: '_LoginControllerBase.visiblePassword', context: context);
 
@@ -105,6 +121,14 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  late final _$loginAsyncAction =
+      AsyncAction('_LoginControllerBase.login', context: context);
+
+  @override
+  Future<bool> login() {
+    return _$loginAsyncAction.run(() => super.login());
+  }
+
   late final _$_LoginControllerBaseActionController =
       ActionController(name: '_LoginControllerBase', context: context);
 
@@ -156,6 +180,7 @@ mixin _$LoginController on _LoginControllerBase, Store {
   String toString() {
     return '''
 username: ${username},
+isLoading: ${isLoading},
 visiblePassword: ${visiblePassword},
 password: ${password},
 errorUsername: ${errorUsername},

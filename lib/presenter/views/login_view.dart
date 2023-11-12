@@ -21,143 +21,152 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: DP14
-          ),
-          width: double.infinity,
-          child:  Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children:  [
-              const SizedBox(
-                height: DP50,
-              ),
-              Image.asset(
-                IMAGELOGO
-              ),
-              const Text(
-                "Faça seu login",
-                style: TextStyle(
-                  fontSize: DP16,
-                  fontWeight: FontWeight.w600
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: DP14
+            ),
+            width: double.infinity,
+            child:  Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:  [
+                const SizedBox(
+                  height: DP50,
                 ),
-              ),
-              const Padding(
-                padding: const EdgeInsets.all(DP8),
-                child: Text(
-                  "Faça seu login e desfrute da experiencia conosco",
+                Image.asset(
+                  IMAGELOGO
+                ),
+                const Text(
+                  "Faça seu login",
                   style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400, 
-                    color: gray600
+                    fontSize: DP16,
+                    fontWeight: FontWeight.w600
                   ),
-                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: DP20,
-              ),
-              Observer(
-                builder: (context) => inputTextField(
-                  onChanged: widget.controller.onChangeUsername,
-                  label: "Username", 
-                  errorText: widget.controller.errorUsername,
-                  hintText: "Username",
-                  controller: _usernameController, 
-                  suffix: const Icon(
-                    Icons.person,
-                    color: Colors.grey,
+                const Padding(
+                  padding: const EdgeInsets.all(DP8),
+                  child: Text(
+                    "Faça seu login e desfrute da experiencia conosco",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400, 
+                      color: gray600
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  inputFormatters: [],
-                )
-              ),
-              Observer(
-                builder: (context) => inputTextField(
-                  onChanged: widget.controller.onChangePassword,
-                  label: "Senha", 
-                  errorText: widget.controller.errorPassword,
-                  hintText: "Senha",
-                  isPassword: true,
-                  changeVisible: widget.controller.setVisiblePassword,
-                  isVisible: widget.controller.visiblePassword,
-                  controller: _passwordController, 
-                  inputFormatters: [
-                    TextInputFormatter.withFunction(
-                      (TextEditingValue oldValue, TextEditingValue newValue) {
-                        return _passwordRegExp.hasMatch(newValue.text) ? newValue : oldValue;
-                      },
+                ),
+                const SizedBox(
+                  height: DP20,
+                ),
+                Observer(
+                  builder: (context) => inputTextField(
+                    onChanged: widget.controller.onChangeUsername,
+                    label: "Username", 
+                    errorText: widget.controller.errorUsername,
+                    hintText: "Username",
+                    controller: _usernameController, 
+                    suffix: const Icon(
+                      Icons.person,
+                      color: Colors.grey,
                     ),
+                    inputFormatters: [],
+                  )
+                ),
+                Observer(
+                  builder: (context) => inputTextField(
+                    onChanged: widget.controller.onChangePassword,
+                    label: "Senha", 
+                    errorText: widget.controller.errorPassword,
+                    hintText: "Senha",
+                    isPassword: true,
+                    changeVisible: widget.controller.setVisiblePassword,
+                    isVisible: widget.controller.visiblePassword,
+                    controller: _passwordController, 
+                    inputFormatters: [
+                      TextInputFormatter.withFunction(
+                        (TextEditingValue oldValue, TextEditingValue newValue) {
+                          return _passwordRegExp.hasMatch(newValue.text) ? newValue : oldValue;
+                        },
+                      ),
+                    ],
+                  )
+                ),
+                const SizedBox(
+                  height: DP4,
+                ),
+                const Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: DP4
+                      ),
+                      child: InkWell(
+                        child: Text(
+                          "Esqueceu a senha ?",
+                           style: TextStyle(
+                            color: primary800
+                           ),
+                        ),
+                      ),
+                    )
                   ],
-                )
-              ),
-              const SizedBox(
-                height: DP4,
-              ),
-              const Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: DP4
-                    ),
-                    child: InkWell(
-                      child: Text(
-                        "Esqueceu a senha ?",
-                         style: TextStyle(
-                          color: primary800
-                         ),
+                ),
+                const SizedBox(
+                  height: DP20,
+                ),
+                Observer(
+                  builder: (context) => Column(
+                    children: [
+                      !widget.controller.isLoading ?
+                      ElevatedButton(
+                      onPressed: () {
+                        widget.controller.login();
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: const MaterialStatePropertyAll(
+                          red800
+                        ),
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: borderRadius
+                          )
+                        )
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: DP20,
+                        width: DP150,
+                        margin:const EdgeInsets.symmetric(
+                          vertical: DP20
+                        ),
+                        child: const Text(
+                          "Entrar"
+                        ),
+                      ),
+                      ):
+                      const CircularProgressIndicator(
+                        color: red500,
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: DP80,
+                ),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.all(DP12),
+                    child: const Text(
+                      "Politicas de privacidade",
+                      style: TextStyle(
+                        color: gray500
                       ),
                     ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: DP20,
-              ),
-              Observer(
-                builder: (context) => ElevatedButton(
-                onPressed: () {
-                  widget.controller.validateData();
-                },
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll(
-                    red800
                   ),
-                  
-                  shape: MaterialStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: borderRadius
-                    )
-                  )
-                ),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: DP20,
-                  width: DP150,
-                  margin:const EdgeInsets.symmetric(
-                    vertical: DP20
-                  ),
-                  child: const Text(
-                    "Entrar"
-                  ),
-                ),
-              ),
-              ),
-              const SizedBox(
-                height: DP80,
-              ),
-              InkWell(
-                child: Container(
-                  padding: EdgeInsets.all(DP12),
-                  child: const Text(
-                    "Politicas de privacidade",
-                    style: TextStyle(
-                      color: gray500
-                    ),
-                  ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

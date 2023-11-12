@@ -46,7 +46,7 @@ class AppModule extends Module{
 
 class AppDependencies {
   static bool get _testMode => true;
-
+  
   static webServiceDependencies(Injector i){
     i.add<UserWebservice>(_testMode ? UserWebserviceTest.new : UserWebserviceImp.new);
   }
@@ -67,7 +67,7 @@ class AppDependencies {
   }
 
   static useCaseDependencies(Injector i){
-    i.add<UserUseCase>(UserUseCaseImp.new);
+    i.add<UserUseCase>(UserRepositoryImp.new);
   }
 
 }

@@ -48,8 +48,13 @@ class UserUseCaseImp implements UserUseCase {
   
   @override
   Future<UserEntity?> login({required String name, required String password})async {
-    var result = await _userRepository.login(name: name, password: password);
-    return result;
+    try {
+       var result = await _userRepository.login(name: name, password: password);
+      return result;
+    } catch (e) {
+      print(e);
+    }
+   
   }
   
   @override

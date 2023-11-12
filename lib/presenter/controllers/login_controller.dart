@@ -1,14 +1,26 @@
+import 'package:login_app/application/usecases/user_use_case_imp.dart';
+import 'package:login_app/domain/services/navigation_service.dart';
+import 'package:login_app/domain/usecases/user_use_case.dart';
 import 'package:mobx/mobx.dart' ;
+import 'package:injectable/injectable.dart';
 
 part 'login_controller.g.dart';
 
-
+@Injectable()
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-  
+
+  final UserUseCase userUseCase;
+  final NavigationService navigationService;
+
+  _LoginControllerBase({required this.userUseCase, required this.navigationService});  
+
   @observable
   String username= "";
+
+  @observable
+  bool isLoading= false;
 
   @observable
   bool visiblePassword= false;
@@ -58,6 +70,36 @@ abstract class _LoginControllerBase with Store {
     return success;
   }
 
+  @action
+  Future<bool> login()async{
+    try {
+      if(validateData()){
+        
+      var result = await userUseCase.login(name: username, password: password);
+      if(result != null) {
+        print("3ntrei");
+        navigateToActivity();
+        isLoading = false;
+      } else {
+        isLoading = false;
+        return false;
+      }
+      isLoading = false;
+      return true;
+    }else {
+      isLoading = false;
+      return false;
+    }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+    
+  }
+
+  void navigateToActivity (){
+    navigationService.navigateToActivies();
+  }
 
   bool validatePassword(String input) {
     RegExp regex = RegExp(r"^[a-zA-Z0-9]{2,20}(?<!\s)$");

@@ -17,16 +17,7 @@ class UserRepositoryImp implements UserRepository {
   this._activityPreferences = activityPreferences
   ; 
   
-  Future<UserEntity?> login({required String name, required String password}) async {
 
-    var result= await _userWebservice.login(name: name, password: password);
-    // ignore: unnecessary_null_comparison
-    if(result!=null){
-      await _userPreferences.saveUser(result);
-    }
-    return result;
-  }
-  
   @override
   Future<UserEntity?> fetchUser()async {
     // TODO: implement fetchUser
@@ -43,6 +34,18 @@ class UserRepositoryImp implements UserRepository {
     await _activityPreferences.deleteAllActivities();
     
     throw UnimplementedError();
+  }
+  
+  @override
+  Future<UserEntity?> login({required String name, required String password}) async{
+   
+    var result= await _userWebservice.login(name: name, password: password);
+    // ignore: unnecessary_null_comparison
+    if(result!=null){
+      await _userPreferences.saveUser(result);
+    }
+    return result;
+   
   }
   
 
