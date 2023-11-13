@@ -22,7 +22,7 @@ class AppModule extends Module{
  
   @override
   void binds(i) {
-    AppDependencies.controllerDependencies(i);
+    //AppDependencies.controllerDependencies(i);
     AppDependencies.repositoryDependencies(i);
     AppDependencies.webServiceDependencies(i);
     AppDependencies.useCaseDependencies(i);
