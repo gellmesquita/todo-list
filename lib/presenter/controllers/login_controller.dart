@@ -30,6 +30,10 @@ abstract class _LoginControllerBase with Store {
   String password= "";
 
   @observable
+  String erroAuth= "";
+
+
+  @observable
   String errorUsername= "";
 
   @observable
@@ -48,6 +52,18 @@ abstract class _LoginControllerBase with Store {
   void setVisiblePassword() {
     visiblePassword= !visiblePassword;
   }
+
+  @action
+  void setLoading() {
+    isLoading= !isLoading;
+  }
+
+  @action
+  void setErrorAuth(String message) {
+    erroAuth= message;
+  }
+
+
 
 
   @action
@@ -73,28 +89,28 @@ abstract class _LoginControllerBase with Store {
   @action
   Future<bool> login()async{
     try {
+      setLoading();
       if(validateData()){
-        
       var result = await userUseCase.login(name: username, password: password);
       if(result != null) {
-        print("3ntrei");
         navigateToActivity();
-        isLoading = false;
+        setLoading();
       } else {
-        isLoading = false;
+        setLoading();
+        setErrorAuth("Usuário não encontrado");
         return false;
       }
-      isLoading = false;
+      setLoading();
       return true;
     }else {
-      isLoading = false;
+      setLoading();
+      setErrorAuth("Erro ao fazer o login");
       return false;
     }
     } catch (e) {
-      print(e);
+      setErrorAuth("$e");
       return false;
     }
-    
   }
 
   void navigateToActivity (){

@@ -10,7 +10,8 @@ class UserWebserviceTest extends UserWebservice{
     var _success= true ;
     return Future.delayed(const Duration(milliseconds: 500), () {
       if (_success) {
-        return Mockito.user.firstWhere((element) => element.name==name && element.password==password);
+        var result= Mockito.user.firstWhere((element) => element.name==name && element.password==password);
+        return result;
       } else {
         return Future.error("Falha na autenticação");
       }

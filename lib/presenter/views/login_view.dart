@@ -18,7 +18,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final RegExp _passwordRegExp = RegExp(r'^[a-zA-Z0-9]*$');
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -120,8 +120,17 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       !widget.controller.isLoading ?
                       ElevatedButton(
-                      onPressed: () {
-                        widget.controller.login();
+                      onPressed: () async {
+                        var result= await widget.controller.login();
+                        if (!result) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            padding: EdgeInsets.all(DP14),
+                            backgroundColor: primary600,
+                            content: Text(widget.controller.erroAuth)
+                          )
+                        );
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: const MaterialStatePropertyAll(

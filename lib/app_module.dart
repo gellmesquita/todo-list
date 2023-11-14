@@ -41,7 +41,7 @@ class AppModule extends Module{
       Routes.activityRoute, 
       child: (context) => InformationCaptureView(controller: Modular.get()),
       transition: TransitionType.rightToLeft,
-      guards: [AuthGuard()]
+  
     );
   }
   

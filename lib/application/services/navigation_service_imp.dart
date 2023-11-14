@@ -13,7 +13,7 @@ class NavigationServiceImp implements NavigationService{
   @override
   void navigateToActivies() {
     Modular.to.pushNamed(
-      Routes.loginRoute,
+      Routes.activityRoute,
     );
   }
 
