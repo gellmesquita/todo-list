@@ -22,7 +22,7 @@ class AppModule extends Module{
  
   @override
   void binds(i) {
-    //AppDependencies.controllerDependencies(i);
+    AppDependencies.controllerDependencies(i);
     AppDependencies.repositoryDependencies(i);
     AppDependencies.webServiceDependencies(i);
     AppDependencies.useCaseDependencies(i);
@@ -55,7 +55,12 @@ class AppDependencies {
   }
 
   static controllerDependencies(Injector i){
-    i.add(LoginController.new);
+    i.add<LoginController>(
+      () => LoginController( 
+        userUseCase: i.get<UserUseCase>(), 
+        navigationService: i.get<NavigationService>(), 
+      ), 
+    );
     i.add(InformationCaptureController.new);
   }
 
