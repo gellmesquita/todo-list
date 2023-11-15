@@ -32,16 +32,18 @@ class AppModule extends Module{
 
   @override
   void routes(r) {
+    
     r.child(
       Routes.loginRoute, 
       child: (context) => LoginView(controller: Modular.get()),
       transition: TransitionType.rightToLeft,
+      guards: [AuthGuard()]
     );
     r.child(
       Routes.activityRoute, 
       child: (context) => InformationCaptureView(controller: Modular.get()),
       transition: TransitionType.rightToLeft,
-  
+      guards: [AuthGuard()]
     );
   }
   
@@ -91,6 +93,7 @@ class AuthGuard extends RouteGuard{
   Future<bool> canActivate(String path, ModularRoute router)async {
     var user =await UserPreferences.doesUserExist();
     if (user) {
+      Modular.to.navigate(Routes.activityRoute);
       return true;
     } else {
       Modular.to.navigate(Routes.loginRoute);

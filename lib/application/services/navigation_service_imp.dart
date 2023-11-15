@@ -5,16 +5,12 @@ import 'package:login_app/application/resources/app_routes.dart' as Routes;
 class NavigationServiceImp implements NavigationService{
   @override
   void navigateToLogin() {
-    Modular.to.pushNamed(
-      Routes.loginRoute,
-    );
+    Modular.to.navigate(Routes.loginRoute);
   }
   
   @override
   void navigateToActivies() {
-    Modular.to.pushNamed(
-      Routes.activityRoute,
-    );
+    Modular.to.navigate(Routes.activityRoute);
   }
 
 }

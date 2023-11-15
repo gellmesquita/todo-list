@@ -1,3 +1,4 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:login_app/application/usecases/user_use_case_imp.dart';
 import 'package:login_app/domain/services/navigation_service.dart';
 import 'package:login_app/domain/usecases/user_use_case.dart';
@@ -63,9 +64,6 @@ abstract class _LoginControllerBase with Store {
     erroAuth= message;
   }
 
-
-
-
   @action
   void onChangePassword(String text) {
     password= text;
@@ -91,22 +89,21 @@ abstract class _LoginControllerBase with Store {
     try {
       setLoading();
       if(validateData()){
-      var result = await userUseCase.login(name: username, password: password);
-      if(result != null) {
-        navigateToActivity();
+        var result = await userUseCase.login(name: username, password: password);
+        if(result != null) {
+          navigateToActivity();
+        } else {
+          setLoading();
+          setErrorAuth("Usuário não encontrado");
+          return false;
+        }
         setLoading();
-      } else {
+        return true;
+      }else {
         setLoading();
-        setErrorAuth("Usuário não encontrado");
+        setErrorAuth("Erro ao fazer o login");
         return false;
       }
-      setLoading();
-      return true;
-    }else {
-      setLoading();
-      setErrorAuth("Erro ao fazer o login");
-      return false;
-    }
     } catch (e) {
       setErrorAuth("$e");
       return false;
