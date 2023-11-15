@@ -10,10 +10,91 @@ part of 'information_capture_controller.dart';
 
 mixin _$InformationCaptureController
     on _InformationCaptureControllerBase, Store {
+  late final _$editLoadingAtom = Atom(
+      name: '_InformationCaptureControllerBase.editLoading', context: context);
+
+  @override
+  bool get editLoading {
+    _$editLoadingAtom.reportRead();
+    return super.editLoading;
+  }
+
+  @override
+  set editLoading(bool value) {
+    _$editLoadingAtom.reportWrite(value, super.editLoading, () {
+      super.editLoading = value;
+    });
+  }
+
+  late final _$deleteLoadingAtom = Atom(
+      name: '_InformationCaptureControllerBase.deleteLoading',
+      context: context);
+
+  @override
+  bool get deleteLoading {
+    _$deleteLoadingAtom.reportRead();
+    return super.deleteLoading;
+  }
+
+  @override
+  set deleteLoading(bool value) {
+    _$deleteLoadingAtom.reportWrite(value, super.deleteLoading, () {
+      super.deleteLoading = value;
+    });
+  }
+
+  late final _$deleteActivityAsyncAction = AsyncAction(
+      '_InformationCaptureControllerBase.deleteActivity',
+      context: context);
+
+  @override
+  Future<bool> deleteActivity(int id) {
+    return _$deleteActivityAsyncAction.run(() => super.deleteActivity(id));
+  }
+
+  late final _$editActivityAsyncAction = AsyncAction(
+      '_InformationCaptureControllerBase.editActivity',
+      context: context);
+
+  @override
+  Future<bool> editActivity(ActivitiesEntity activity) {
+    return _$editActivityAsyncAction.run(() => super.editActivity(activity));
+  }
+
+  late final _$_InformationCaptureControllerBaseActionController =
+      ActionController(
+          name: '_InformationCaptureControllerBase', context: context);
+
+  @override
+  void setLoadingEdit(bool value) {
+    final _$actionInfo = _$_InformationCaptureControllerBaseActionController
+        .startAction(name: '_InformationCaptureControllerBase.setLoadingEdit');
+    try {
+      return super.setLoadingEdit(value);
+    } finally {
+      _$_InformationCaptureControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setLoadingDelete(bool value) {
+    final _$actionInfo =
+        _$_InformationCaptureControllerBaseActionController.startAction(
+            name: '_InformationCaptureControllerBase.setLoadingDelete');
+    try {
+      return super.setLoadingDelete(value);
+    } finally {
+      _$_InformationCaptureControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-
+editLoading: ${editLoading},
+deleteLoading: ${deleteLoading}
     ''';
   }
 }

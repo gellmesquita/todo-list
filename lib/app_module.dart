@@ -63,7 +63,12 @@ class AppDependencies {
         navigationService: i.get<NavigationService>(), 
       ), 
     );
-    i.add(InformationCaptureController.new);
+    i.add<InformationCaptureController>( 
+      () => InformationCaptureController( 
+        userUseCase: i.get<UserUseCase>(), 
+        navigationService: i.get<NavigationService>(), 
+      ), 
+    );
   }
 
   static navigationServicesDependencies(Injector i){

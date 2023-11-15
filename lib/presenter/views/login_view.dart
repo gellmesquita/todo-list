@@ -5,7 +5,7 @@ import 'package:login_app/application/resources/app_constants.dart';
 import 'package:login_app/application/resources/size_utils.dart';
 import 'package:login_app/presenter/controllers/login_controller.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key, required this.controller});
@@ -164,6 +164,7 @@ class _LoginViewState extends State<LoginView> {
                   height: DP80,
                 ),
                 InkWell(
+                  onTap: openUrl,
                   child: Container(
                     padding: EdgeInsets.all(DP12),
                     child: const Text(
@@ -182,6 +183,15 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
+  void openUrl() async {
+    const url = 'https://www.google.com';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+  
   Widget inputTextField({
     String? label,
     required Function(String)? onChanged,  

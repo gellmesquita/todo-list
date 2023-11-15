@@ -73,6 +73,22 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  late final _$erroAuthAtom =
+      Atom(name: '_LoginControllerBase.erroAuth', context: context);
+
+  @override
+  String get erroAuth {
+    _$erroAuthAtom.reportRead();
+    return super.erroAuth;
+  }
+
+  @override
+  set erroAuth(String value) {
+    _$erroAuthAtom.reportWrite(value, super.erroAuth, () {
+      super.erroAuth = value;
+    });
+  }
+
   late final _$errorUsernameAtom =
       Atom(name: '_LoginControllerBase.errorUsername', context: context);
 
@@ -155,6 +171,28 @@ mixin _$LoginController on _LoginControllerBase, Store {
   }
 
   @override
+  void setLoading() {
+    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
+        name: '_LoginControllerBase.setLoading');
+    try {
+      return super.setLoading();
+    } finally {
+      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setErrorAuth(String message) {
+    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
+        name: '_LoginControllerBase.setErrorAuth');
+    try {
+      return super.setErrorAuth(message);
+    } finally {
+      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void onChangePassword(String text) {
     final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
         name: '_LoginControllerBase.onChangePassword');
@@ -183,6 +221,7 @@ username: ${username},
 isLoading: ${isLoading},
 visiblePassword: ${visiblePassword},
 password: ${password},
+erroAuth: ${erroAuth},
 errorUsername: ${errorUsername},
 errorPassword: ${errorPassword},
 validData: ${validData}

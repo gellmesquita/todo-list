@@ -1,3 +1,4 @@
+const double  DP1 = 1.00;
 const double  DP2 = 8.00;
 const double  DP4 = 8.00;
 const double  DP6 = 8.00;
