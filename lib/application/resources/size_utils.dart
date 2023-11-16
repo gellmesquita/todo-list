@@ -1,12 +1,13 @@
 const double  DP1 = 1.00;
-const double  DP2 = 8.00;
-const double  DP4 = 8.00;
-const double  DP6 = 8.00;
-const double  DP12 = 8.00;
+const double  DP2 = 2.00;
+const double  DP4 = 4.00;
+const double  DP6 = 6.00;
+const double  DP12 = 12.00;
 const double  DP8 = 8.00;
 const double DP10 = 10.00;
 const double DP14 = 14.00;
 const double DP16 = 16.00;
+const double DP18 = 18.00;
 const double DP20 = 20.00;
 const double DP24 = 24.00;
 const double DP30 = 30.00;

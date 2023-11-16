@@ -16,14 +16,20 @@ abstract class _InformationCaptureControllerBase with Store {
   final UserUseCase userUseCase;
   final NavigationService navigationService;
 
-  _InformationCaptureControllerBase({required this.userUseCase, required this.navigationService});  
+  _InformationCaptureControllerBase({required this.userUseCase, required this.navigationService}){
+    fetchActivity();
+  }
 
 
   @observable
   bool editLoading = false;
 
   @observable
+  List<ActivitiesEntity> activities = [];
+
+  @observable
   bool deleteLoading = false;
+
 
   @action
   void setLoadingEdit(bool value){
@@ -45,11 +51,16 @@ abstract class _InformationCaptureControllerBase with Store {
   }
 
   @action 
+  Future<void> fetchActivity() async{
+    activities= await userUseCase.fetchActivities();
+  }
+
+  @action 
   Future<bool> editActivity(ActivitiesEntity activity) async{
     setLoadingEdit(true);
     var result= await userUseCase.editActivity(activity);
     if(result)
-     setLoadingEdit(false);
+    setLoadingEdit(false);
     return result;
   }
 
