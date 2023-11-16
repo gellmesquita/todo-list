@@ -16,10 +16,7 @@ abstract class _InformationCaptureControllerBase with Store {
   final UserUseCase userUseCase;
   final NavigationService navigationService;
 
-  _InformationCaptureControllerBase({required this.userUseCase, required this.navigationService}){
-    fetchActivity();
-  }
-
+  _InformationCaptureControllerBase({required this.userUseCase, required this.navigationService});
 
   @observable
   bool editLoading = false;
@@ -30,10 +27,18 @@ abstract class _InformationCaptureControllerBase with Store {
   @observable
   bool deleteLoading = false;
 
+  @observable
+  bool addLoading = false;
+
 
   @action
   void setLoadingEdit(bool value){
     editLoading= value;
+  }
+
+  @action
+  void setAddLoading(bool value){
+    addLoading= value;
   }
 
   @action
@@ -61,6 +66,15 @@ abstract class _InformationCaptureControllerBase with Store {
     var result= await userUseCase.editActivity(activity);
     if(result)
     setLoadingEdit(false);
+    return result;
+  }
+
+  @action 
+  Future<bool> addActivity(String activity) async{
+    setAddLoading(true);
+    var result= await userUseCase.addActivity(activity);
+    if(result)
+    setAddLoading(false);
     return result;
   }
 

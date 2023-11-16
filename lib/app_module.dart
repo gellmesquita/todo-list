@@ -53,7 +53,9 @@ class AppDependencies {
   static bool get _testMode => true;
   
   static webServiceDependencies(Injector i){
-    i.add<UserWebservice>(_testMode ? UserWebserviceTest.new : UserWebserviceImp.new);
+    i.add<UserWebservice>(
+      _testMode ? UserWebserviceTest.new : UserWebserviceImp.new
+    );
   }
 
   static controllerDependencies(Injector i){

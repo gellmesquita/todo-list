@@ -1,6 +1,6 @@
 class ActivitiesEntity {
   final String description;
-  final String id;
+  final int id;
   ActivitiesEntity({ required this.description, required this.id});
 
   Map<String, dynamic> toJson() {

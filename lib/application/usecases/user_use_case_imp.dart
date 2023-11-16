@@ -15,7 +15,7 @@ class UserUseCaseImp implements UserUseCase {
   }): _userRepository=userRepository, _activityRepository=activityRepository;
   
   @override
-  Future<bool> addActivity(ActivitiesEntity activity) async{
+  Future<bool> addActivity(String activity) async{
     
     return await _activityRepository.addActivity(activity);
   }

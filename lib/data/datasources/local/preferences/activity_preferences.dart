@@ -40,10 +40,15 @@ class ActivityPreferences {
     return activities.firstWhere((activity) => activity.id == id);
   }
 
-  Future<bool> addActivity(ActivitiesEntity activity) async {
+  Future<bool> addActivity(String activity) async {
     try {
       List<ActivitiesEntity> activities = await getActivities();
-      activities.add(activity);
+      activities.add(
+        ActivitiesEntity(
+          description: activity, 
+          id: (activities.length>0)? activities[activities.length-1].id+1 : 1
+        )
+      );
       return await saveActivities(activities);
     } catch (e) {
       return false;

@@ -22,6 +22,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
   @override
   void initState() {
     super.initState();
+    widget.controller.fetchActivity();
     myFocusNode.addListener(() {
       if (!myFocusNode.hasFocus) {
         _checkIfTextFilled();
@@ -59,7 +60,10 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: DP10, horizontal: DP18),
+          padding: const EdgeInsets.symmetric(
+            vertical: DP10, 
+            horizontal: DP18
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -76,15 +80,16 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                 height: DP10,
               ),
               Observer(
-                builder: (context) {
-                  var activity = widget.controller.activities;
-                  return ListView.builder(
-                    itemCount: activity.length,
-                    itemBuilder: (context, index) =>
-                        itemActivity(activity[index]),
-                  );
-                },
+                builder: (context) => ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.controller.activities.length,
+                  itemBuilder: (context, index) {
+                    var activity = widget.controller.activities[index];
+                    return itemActivity(activity);
+                  },
+                ),
               )
+             
             ],
           ),
         ),
@@ -104,11 +109,11 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
           Expanded(
             child: Text(
               activity.description,
-              style: TextStyle(color: gray800),
+              style: const TextStyle(color: gray800),
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: DP10),
+            padding: const EdgeInsets.symmetric(horizontal: DP10),
             alignment: Alignment.center,
             child: Row(
               children: [
@@ -127,7 +132,9 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                 InkWell(
                   onTap: () {
                     deleteActivityDialog(
-                        activity.id, widget.controller.deleteLoading);
+                      activity.id, 
+                      widget.controller.deleteLoading
+                    );
                   },
                   child: const Icon(
                     Icons.delete_outline_outlined,
@@ -146,7 +153,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
     if (textEditingController.text.isEmpty) {
       print('Por favor, preencha o campo!');
     } else {
-      print('Texto preenchido: ${textEditingController.text}');
+      widget.controller.addActivity(textEditingController.text);
     }
   }
 
@@ -157,17 +164,18 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
     super.dispose();
   }
 
-  void deleteActivityDialog(String id, bool isLoading) {
+  void deleteActivityDialog(int id, bool isLoading) {
     showDialog(
       context: context,
       builder: (context) {
         return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(DP14)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(DP14)
+          ),
           child: Container(
             height: 260,
             width: 350,
-            padding: EdgeInsets.symmetric(horizontal: DP30, vertical: DP30),
+            padding: const EdgeInsets.symmetric(horizontal: DP30, vertical: DP30),
             child: Column(
               children: [
                 const Text(
@@ -203,21 +211,25 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                       ),
                     ),
                     InkWell(
-                      onTap: widget.controller.goBack,
+                      onTap: () {
+                       widget.controller.deleteActivity(id); 
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: borderRadius, color: primary800),
-                        padding: EdgeInsets.symmetric(
-                            vertical: DP10, horizontal: DP30),
-                        child: true
-                            ? Text(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: DP10,
+                             horizontal: DP30
+                        ),
+                        child: !isLoading
+                            ? const Text(
                                 "Confirmar",
                                 style: TextStyle(
                                     fontSize: DP14,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               )
-                            : SizedBox(
+                            : const SizedBox(
                                 width: DP20,
                                 height: DP20,
                                 child: CircularProgressIndicator(
@@ -237,7 +249,10 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
     );
   }
 
-  void editActivityDialog(ActivitiesEntity activitiesEntity, bool isloding) {
+  void editActivityDialog(
+    ActivitiesEntity activity, 
+    bool isLoading
+  ){
     FocusNode focus = FocusNode();
     TextEditingController textController = TextEditingController();
     showDialog(
@@ -249,7 +264,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
           child: Container(
             height: 260,
             width: 350,
-            padding: EdgeInsets.symmetric(horizontal: DP30, vertical: DP30),
+            padding: const EdgeInsets.symmetric(horizontal: DP30, vertical: DP30),
             child: Column(
               children: [
                 InputTextField(
@@ -277,21 +292,23 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                       ),
                     ),
                     InkWell(
-                      onTap: widget.controller.goBack,
+                      onTap: () {
+                        widget.controller.editActivity(activity);
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: borderRadius, color: primary800),
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: DP10, horizontal: DP30),
-                        child: true
-                            ? Text(
+                        child: !isLoading
+                            ? const Text(
                                 "Confirmar",
                                 style: TextStyle(
                                     fontSize: DP14,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               )
-                            : SizedBox(
+                            : const SizedBox(
                                 width: DP20,
                                 height: DP20,
                                 child: CircularProgressIndicator(
