@@ -58,28 +58,38 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: DP10, 
-            horizontal: DP18
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InputTextField(
-                onChanged: (p0) {
-                  _checkIfTextFilled();
-                },
-                label: "Descreve sua actividade",
-                hintText: "Digite um texto",
-                focus: myFocusNode,
-                controller: textEditingController,
+      body: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: DP10, 
+          horizontal: DP18
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Observer(
+              builder: (context) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InputTextField(
+                    onChanged: (p0) { },
+                    onSubmit: (p0) {
+                      _checkIfTextFilled();
+                    },
+                    label: "Descreve sua actividade",
+                    hintText: "Digite um texto",
+                    focus: myFocusNode,
+                    controller: textEditingController,
+                  ),
+                  if(widget.controller.addLoading)
+                  Text("Adicionado ...")
+                ],
               ),
-              const SizedBox(
-                height: DP10,
-              ),
-              Observer(
+            ),
+            const SizedBox(
+              height: DP10,
+            ),
+            Expanded(
+              child: Observer(
                 builder: (context) => ListView.builder(
                   shrinkWrap: true,
                   itemCount: widget.controller.activities.length,
@@ -88,10 +98,9 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                     return itemActivity(activity);
                   },
                 ),
-              )
-             
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -119,6 +128,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
               children: [
                 InkWell(
                   onTap: () {
+                    FocusScope.of(context).requestFocus(myFocusNode);
                     editActivityDialog(activity, widget.controller.editLoading);
                   },
                   child: const Icon(
@@ -154,6 +164,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
       print('Por favor, preencha o campo!');
     } else {
       widget.controller.addActivity(textEditingController.text);
+      textEditingController.text="";
     }
   }
 
@@ -229,14 +240,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               )
-                            : const SizedBox(
-                                width: DP20,
-                                height: DP20,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: DP1,
-                                ),
-                              ),
+                            : loading(),
                       ),
                     ),
                   ],
@@ -249,12 +253,23 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
     );
   }
 
+  Widget loading({Color color=Colors.white, double size= DP20 }) {
+    return  Container(
+      width: size,
+      height: size,
+      child: CircularProgressIndicator(
+        color: color,
+        strokeWidth: DP2,
+      ),
+    );
+  }
+
   void editActivityDialog(
     ActivitiesEntity activity, 
     bool isLoading
   ){
     FocusNode focus = FocusNode();
-    TextEditingController textController = TextEditingController();
+    TextEditingController textController = TextEditingController(text: activity.description);
     showDialog(
       context: context,
       builder: (context) {
@@ -269,6 +284,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
               children: [
                 InputTextField(
                   onChanged: (p0) {},
+                  label: "Editar actividade nº ${activity.id}",
                   controller: textController,
                   focus: focus,
                   onSubmit: (p0) {},

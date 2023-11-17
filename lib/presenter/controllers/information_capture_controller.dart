@@ -1,5 +1,3 @@
-
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/domain/entities/activities_entity.dart';
 import 'package:login_app/domain/services/navigation_service.dart';
@@ -48,11 +46,15 @@ abstract class _InformationCaptureControllerBase with Store {
 
   @action 
   Future<bool> deleteActivity(int id) async{
-    setLoadingDelete(true);
-    var result= await userUseCase.deleteActivity(id);
-    if(result)
-     setLoadingDelete(false);
-    return result;
+    try {
+      setLoadingDelete(true);
+      var result= await userUseCase.deleteActivity(id);
+      return result;
+    }finally{
+      fetchActivity();
+      setLoadingDelete(false);
+      goBack();
+    }
   }
 
   @action 
@@ -64,8 +66,10 @@ abstract class _InformationCaptureControllerBase with Store {
   Future<bool> editActivity(ActivitiesEntity activity) async{
     setLoadingEdit(true);
     var result= await userUseCase.editActivity(activity);
-    if(result)
-    setLoadingEdit(false);
+    if(result){
+      fetchActivity();
+      setLoadingEdit(false);
+    }
     return result;
   }
 
@@ -73,8 +77,10 @@ abstract class _InformationCaptureControllerBase with Store {
   Future<bool> addActivity(String activity) async{
     setAddLoading(true);
     var result= await userUseCase.addActivity(activity);
-    if(result)
-    setAddLoading(false);
+    if(result){
+      fetchActivity();
+      setAddLoading(false);
+    }
     return result;
   }
 
