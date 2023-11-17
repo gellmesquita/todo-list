@@ -38,13 +38,11 @@ class AppModule extends Module{
       Routes.activityRoute, 
       child: (context) => InformationCaptureView(controller: Modular.get()),
       transition: TransitionType.rightToLeft,
-      guards: [AuthGuard()]
     );
     r.child(
       Routes.loginRoute, 
       child: (context) => LoginView(controller: Modular.get()),
       transition: TransitionType.rightToLeft,
-      guards: [AuthGuard()]
     );
     r.child(
       Routes.profileRoute, 
@@ -52,6 +50,7 @@ class AppModule extends Module{
       transition: TransitionType.rightToLeft,
       guards: [AuthGuard()]
     );
+    
   }
   
 }

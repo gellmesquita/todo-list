@@ -7,6 +7,7 @@ import 'package:login_app/application/resources/app_theme.dart';
 void main() {
   runApp(
     ModularApp(
+
       module: AppModule(), 
       child: MyApp()
     )
