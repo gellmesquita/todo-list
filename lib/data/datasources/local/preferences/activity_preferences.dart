@@ -18,6 +18,7 @@ class ActivityPreferences {
 
   Future<bool> saveActivities(List<ActivitiesEntity> activities) async {
     try {
+      _preferences=  await SharedPreferences.getInstance();
       List<String> activitiesJson = activities.map((activity) => jsonEncode(activity.toJson())).toList();
       _preferences.setStringList(ACTIVITYPREFERENCES, activitiesJson);
       return true;
@@ -27,6 +28,7 @@ class ActivityPreferences {
   }
 
   Future<List<ActivitiesEntity>> getActivities() async {
+    _preferences=  await SharedPreferences.getInstance();
     List<String>? activitiesJson = _preferences.getStringList(ACTIVITYPREFERENCES);
     if (activitiesJson != null) {
       return activitiesJson.map((json) => ActivitiesEntity.fromJson(jsonDecode(json))).toList();
@@ -36,14 +38,20 @@ class ActivityPreferences {
   }
 
   Future<ActivitiesEntity?> getActivityById(int id) async {
+    _preferences=  await SharedPreferences.getInstance();
     List<ActivitiesEntity> activities = await getActivities();
     return activities.firstWhere((activity) => activity.id == id);
   }
 
-  Future<bool> addActivity(ActivitiesEntity activity) async {
+  Future<bool> addActivity(String activity) async {
     try {
       List<ActivitiesEntity> activities = await getActivities();
-      activities.add(activity);
+      activities.add(
+        ActivitiesEntity(
+          description: activity, 
+          id: (activities.length>0)? activities[activities.length-1].id+1 : 1
+        )
+      );
       return await saveActivities(activities);
     } catch (e) {
       return false;

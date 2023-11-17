@@ -9,7 +9,7 @@ class ActvityRepositoryImp implements ActivityRepository {
   }): this._activityPreferences= activityPreferences;
 
   @override
-  Future<bool> addActivity(ActivitiesEntity activity) async{
+  Future<bool> addActivity(String activity) async{
     var result = await _activityPreferences.addActivity(activity);
     return result;
   }

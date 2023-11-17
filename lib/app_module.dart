@@ -15,6 +15,7 @@ import 'package:login_app/domain/services/navigation_service.dart';
 import 'package:login_app/domain/usecases/user_use_case.dart';
 import 'package:login_app/presenter/controllers/information_capture_controller.dart';
 import 'package:login_app/presenter/controllers/login_controller.dart';
+import 'package:login_app/presenter/controllers/profile_controller.dart';
 import 'package:login_app/presenter/views/information_capture_view.dart';
 import 'package:login_app/presenter/views/login_view.dart';
 
@@ -53,7 +54,9 @@ class AppDependencies {
   static bool get _testMode => true;
   
   static webServiceDependencies(Injector i){
-    i.add<UserWebservice>(_testMode ? UserWebserviceTest.new : UserWebserviceImp.new);
+    i.add<UserWebservice>(
+      _testMode ? UserWebserviceTest.new : UserWebserviceImp.new
+    );
   }
 
   static controllerDependencies(Injector i){
@@ -63,7 +66,18 @@ class AppDependencies {
         navigationService: i.get<NavigationService>(), 
       ), 
     );
-    i.add(InformationCaptureController.new);
+    i.add<InformationCaptureController>( 
+      () => InformationCaptureController( 
+        userUseCase: i.get<UserUseCase>(), 
+        navigationService: i.get<NavigationService>(), 
+      ), 
+    );
+    i.add<ProfileController>( 
+      () => ProfileController( 
+        userUseCase: i.get<UserUseCase>(), 
+        navigationService: i.get<NavigationService>(), 
+      ), 
+    );
   }
 
   static navigationServicesDependencies(Injector i){

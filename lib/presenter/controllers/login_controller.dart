@@ -5,6 +5,8 @@ import 'package:login_app/domain/usecases/user_use_case.dart';
 import 'package:mobx/mobx.dart' ;
 
 
+
+
 part 'login_controller.g.dart';
 
 
@@ -93,20 +95,19 @@ abstract class _LoginControllerBase with Store {
         if(result != null) {
           navigateToActivity();
         } else {
-          setLoading();
           setErrorAuth("Usuário não encontrado");
           return false;
         }
-        setLoading();
         return true;
       }else {
-        setLoading();
         setErrorAuth("Erro ao fazer o login");
         return false;
       }
     } catch (e) {
       setErrorAuth("$e");
       return false;
+    }finally{
+      setLoading();
     }
   }
 

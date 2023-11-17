@@ -19,6 +19,7 @@ class UserPreferences {
 
   Future<bool> saveUser(UserEntity user) async {
     try {
+      _preferences=  await SharedPreferences.getInstance();
       String userJson = jsonEncode(user.toJson());
       _preferences.setString(USERPREFERENCES, userJson);
       return true;
@@ -28,6 +29,7 @@ class UserPreferences {
   }
 
   Future<UserEntity?> getUser() async {  
+    _preferences=  await SharedPreferences.getInstance();
     String? userJson = _preferences.getString(USERPREFERENCES);
     if (userJson != null) {
       return UserEntity.fromJson(jsonDecode(userJson));
@@ -39,6 +41,7 @@ class UserPreferences {
 
   Future<bool> deleteUser() async {
     try {
+      _preferences=  await SharedPreferences.getInstance();
       return await _preferences.remove(USERPREFERENCES); 
     } catch (e) {
       return false; 
