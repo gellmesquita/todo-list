@@ -64,13 +64,15 @@ abstract class _InformationCaptureControllerBase with Store {
 
   @action 
   Future<bool> editActivity(ActivitiesEntity activity) async{
-    setLoadingEdit(true);
-    var result= await userUseCase.editActivity(activity);
-    if(result){
+    try {
+      setLoadingEdit(true);
+      var result= await userUseCase.editActivity(activity);
+      return result;
+    }finally{
       fetchActivity();
       setLoadingEdit(false);
+      goBack();
     }
-    return result;
   }
 
   @action 

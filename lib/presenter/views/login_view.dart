@@ -123,13 +123,7 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: () async {
                         var result= await widget.controller.login();
                         if (!result) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            padding: EdgeInsets.all(DP14),
-                            backgroundColor: primary600,
-                            content: Text(widget.controller.erroAuth)
-                          )
-                        );
+                          toastMessage(context, widget.controller.erroAuth, primary600);
                         }
                       },
                       style: ButtonStyle(
@@ -181,6 +175,16 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  void toastMessage(BuildContext context, String message, Color color ){
+    ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      padding: EdgeInsets.all(DP14),
+      backgroundColor: color,
+      content: Text(message)
+    )
+                            );
   }
 
   void openUrl() async {

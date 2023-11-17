@@ -16,8 +16,8 @@ class InformationCaptureView extends StatefulWidget {
 }
 
 class _InformationCaptureViewState extends State<InformationCaptureView> {
-  FocusNode myFocusNode = FocusNode();
-  TextEditingController textEditingController = TextEditingController();
+   FocusNode myFocusNode = FocusNode();
+  late TextEditingController textEditingController= TextEditingController();
 
   @override
   void initState() {
@@ -25,7 +25,6 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
     widget.controller.fetchActivity();
     myFocusNode.addListener(() {
       if (!myFocusNode.hasFocus) {
-        _checkIfTextFilled();
         FocusScope.of(context).requestFocus(myFocusNode);
       }
     });
@@ -128,7 +127,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
               children: [
                 InkWell(
                   onTap: () {
-                    FocusScope.of(context).requestFocus(myFocusNode);
+                    FocusScope.of(context).nextFocus();
                     editActivityDialog(activity, widget.controller.editLoading);
                   },
                   child: const Icon(
@@ -141,6 +140,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                 ),
                 InkWell(
                   onTap: () {
+                    myFocusNode.unfocus();
                     deleteActivityDialog(
                       activity.id, 
                       widget.controller.deleteLoading
@@ -159,14 +159,30 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
     );
   }
 
+  void _moveToNextFocus() {
+    FocusScope.of(context).requestFocus(myFocusNode);
+  }
+
   void _checkIfTextFilled() {
     if (textEditingController.text.isEmpty) {
-      print('Por favor, preencha o campo!');
+      toastMessage(context, "precisa preencher o campo", primary600);
     } else {
       widget.controller.addActivity(textEditingController.text);
       textEditingController.text="";
     }
   }
+
+
+  void toastMessage(BuildContext context, String message, Color color ){
+    ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      padding: EdgeInsets.all(DP14),
+      backgroundColor: color,
+      content: Text(message)
+    )
+                            );
+  }
+
 
   @override
   void dispose() {
@@ -223,7 +239,8 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                     ),
                     InkWell(
                       onTap: () {
-                       widget.controller.deleteActivity(id); 
+                       widget.controller.deleteActivity(id);
+                       _moveToNextFocus(); 
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -294,22 +311,34 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: widget.controller.goBack,
+                      onTap:() {
+                        widget.controller.goBack();
+                        _moveToNextFocus();
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            vertical: DP10, horizontal: DP10),
+                            vertical: DP10, 
+                            horizontal: DP10
+                        ),
                         child: const Text(
                           "Cancelar",
                           style: TextStyle(
                               fontSize: DP14,
                               fontWeight: FontWeight.bold,
-                              color: gray800),
+                              color: gray800
+                          ),
                         ),
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                        widget.controller.editActivity(activity);
+                        widget.controller.editActivity(
+                          ActivitiesEntity(
+                            description: textController.text, 
+                            id: activity.id
+                          )
+                        );
+                        _moveToNextFocus();
                       },
                       child: Container(
                         decoration: BoxDecoration(
