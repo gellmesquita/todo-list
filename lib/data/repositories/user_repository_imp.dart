@@ -30,10 +30,11 @@ class UserRepositoryImp implements UserRepository {
   @override
   Future<bool> logout() async{
     // TODO: implement logout
-    await _userPreferences.deleteUser();
-    await _activityPreferences.deleteAllActivities();
+    var deleteUser= await _userPreferences.deleteUser();
+    var deleteActivity= await _activityPreferences.deleteAllActivities();
     
-    throw UnimplementedError();
+    return deleteActivity && deleteUser;
+    
   }
   
   @override

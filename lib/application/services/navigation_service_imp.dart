@@ -17,5 +17,10 @@ class NavigationServiceImp implements NavigationService{
   void navigateToBack() {
     Modular.to.pop();
   }
+  
+  @override
+  void navigateToProfile() {
+    Modular.to.navigate(Routes.profileRoute);
+  }
 
 }

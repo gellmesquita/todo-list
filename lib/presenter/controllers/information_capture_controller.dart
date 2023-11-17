@@ -89,4 +89,8 @@ abstract class _InformationCaptureControllerBase with Store {
   void goBack (){
     navigationService.navigateToBack();
   }
+
+  void goToProfile (){
+    navigationService.navigateToProfile();
+  }
 }

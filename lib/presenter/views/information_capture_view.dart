@@ -48,7 +48,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
             padding:
                 const EdgeInsets.symmetric(vertical: DP10, horizontal: DP10),
             child: InkWell(
-              onTap: () {},
+              onTap: widget.controller.goToProfile,
               child: const Icon(
                 Icons.person_2,
                 color: gray700,

@@ -18,6 +18,7 @@ import 'package:login_app/presenter/controllers/login_controller.dart';
 import 'package:login_app/presenter/controllers/profile_controller.dart';
 import 'package:login_app/presenter/views/information_capture_view.dart';
 import 'package:login_app/presenter/views/login_view.dart';
+import 'package:login_app/presenter/views/profile_view.dart';
 
 class AppModule extends Module{
  
@@ -33,7 +34,12 @@ class AppModule extends Module{
 
   @override
   void routes(r) {
-    
+    r.child(
+      Routes.activityRoute, 
+      child: (context) => InformationCaptureView(controller: Modular.get()),
+      transition: TransitionType.rightToLeft,
+      guards: [AuthGuard()]
+    );
     r.child(
       Routes.loginRoute, 
       child: (context) => LoginView(controller: Modular.get()),
@@ -41,8 +47,8 @@ class AppModule extends Module{
       guards: [AuthGuard()]
     );
     r.child(
-      Routes.activityRoute, 
-      child: (context) => InformationCaptureView(controller: Modular.get()),
+      Routes.profileRoute, 
+      child: (context) => ProfileView(controller: Modular.get()),
       transition: TransitionType.rightToLeft,
       guards: [AuthGuard()]
     );
@@ -107,10 +113,8 @@ class AuthGuard extends RouteGuard{
   Future<bool> canActivate(String path, ModularRoute router)async {
     var user =await UserPreferences.doesUserExist();
     if (user) {
-      Modular.to.navigate(Routes.activityRoute);
       return true;
     } else {
-      Modular.to.navigate(Routes.loginRoute);
       return false;
     }
   }

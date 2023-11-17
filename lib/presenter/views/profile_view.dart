@@ -17,18 +17,13 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-   FocusNode myFocusNode = FocusNode();
-  late TextEditingController textEditingController= TextEditingController();
+
 
   @override
   void initState() {
     super.initState();
     widget.controller.fetchUser();
-    myFocusNode.addListener(() {
-      if (!myFocusNode.hasFocus) {
-        FocusScope.of(context).requestFocus(myFocusNode);
-      }
-    });
+   
   }
 
   @override
@@ -38,7 +33,9 @@ class _ProfileViewState extends State<ProfileView> {
         backgroundColor: Colors.white,
         elevation: 1,
         leading: InkWell(
-          onTap: widget.controller.goBack,
+          onTap:(){
+            widget.controller.goBack();
+          },
           child: const Icon(
             Icons.arrow_back_ios,
             color: gray800,
@@ -57,31 +54,76 @@ class _ProfileViewState extends State<ProfileView> {
           vertical: DP10, 
           horizontal: DP18
         ),
+        width: double.infinity,
         child: Column(
           children: [
-            CircleAvatar(
-              backgroundColor: gray800,
-            ),
-            SizedBox(
+            const SizedBox(
               height: DP12,
             ),
-            ItemProfile( userData: widget.controller.user!.name),
-            ItemProfile( userData: widget.controller.user!.)
+            Observer(
+              builder: (context) => Column(
+                children: [
+                  if(widget.controller.user!= null)
+                    Column(
+                      children: [
+                        ItemProfile( userData: widget.controller.user!.name),
+                        ItemProfile( userData: widget.controller.user!.numberPhone, label: "Telefone")
+                      ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: DP30,
+            ),
+            Container(
+              padding: EdgeInsets.all(DP12),
+              child: InkWell(
+                onTap: widget.controller.logout,
+                child: const Text(
+                  "Terminar secção",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    color: primary500
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 
-  Container ItemProfile({String userData=""}) {
+  Container ItemProfile({String userData="", String label="Nome"}) {
     return Container(
-            padding: EdgeInsets.symmetric(
-              vertical: DP8,
-            ),
-            child: Text(
-              userData,
-            ),
-          );
+      width: double.infinity,
+      decoration:const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: gray400)
+                )
+          ),
+          padding: const EdgeInsets.symmetric(
+            vertical: DP20
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  color: gray500
+                ),
+              ),
+              Text(
+                userData,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700
+                ),
+              ),
+            ],
+          ),
+    );
   }
 
   @override

@@ -24,7 +24,7 @@ abstract class _ProfileControllerBase with Store {
   List<ActivitiesEntity> activities = [];
 
   @observable
-  late UserEntity? user;
+  UserEntity? user;
 
   @observable
   bool deleteLoading = false;
@@ -40,7 +40,7 @@ abstract class _ProfileControllerBase with Store {
   @action 
   Future<void> logout() async{
     try {
-      var result= await userUseCase.logout();
+      await userUseCase.logout();
     }finally{
       goToLogin();
     }
@@ -48,15 +48,11 @@ abstract class _ProfileControllerBase with Store {
 
   @action 
   Future<void> fetchUser() async{
-    try {
-      user= await userUseCase.getUser();
-    }finally{
-      goToLogin();
-    }
+    user= await userUseCase.getUser();
   }
 
   void goBack (){
-    navigationService.navigateToBack();
+    navigationService.navigateToActivies();
   }
 
   void goToLogin (){
