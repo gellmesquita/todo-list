@@ -1,16 +1,46 @@
 # login_app
 
-A new Flutter project.
+Este projeto foi criado como parte do teste técnico para a empresa Target Sistemas.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+O **login_app** é um aplicativo desenvolvido em Dart usando o framework Flutter. Ele permite realizar operações de login, criação, exclusão, edição e visualização de registros de atividades, funcionando essencialmente como uma TODO LIST.
 
-A few resources to get you started if this is your first Flutter project:
+## Tecnologias Utilizadas
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+O projeto faz uso das seguintes tecnologias e bibliotecas:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Dart (Flutter):** Linguagem de programação e framework para o desenvolvimento de aplicativos multiplataforma.
+- **MobX ^2.1.3:** Utilizado para o gerenciamento de estado da aplicação.
+- **shared_preferences ^2.2.2:** Responsável pela persistência de dados local, usado para armazenar os dados das atividades ou da TODO LIST.
+- **flutter_modular ^6.3.2:** Uma biblioteca poderosa para gerenciamento de rotas e injeção de dependências.
+
+## Padrão de Arquitetura
+
+Este projeto adota os princípios da Clean Architecture, uma abordagem que visa a separação clara de responsabilidades e a escalabilidade do código. As principais camadas da arquitetura incluem:
+
+- **Entidades:** Definem objetos de negócios e lógica de domínio.
+- **Casos de Uso:** Implementam a lógica de negócios e coordenam a interação entre as entidades.
+- **Interfaces de Usuário:** Contêm a lógica de apresentação e interação com o usuário.
+- **Adaptadores Externos:** Lidam com a comunicação externa, como bancos de dados, APIs, etc.
+
+## Ambiente de Teste
+
+Para facilitar o ambiente de teste, o projeto utiliza dados mockados de usuários. Esses dados fictícios estão localizados no diretório `lib/data/webservices/test/mockitos`. Alguns usuários para teste incluem:
+
+- UserEntity(name: "Gelson", password: "1234", id: "1", numberPhone: "1234567890")
+- UserEntity(name: "Fabio", password: "1234", id: "2", numberPhone: "1234567890")
+- UserEntity(name: "Jorge", password: "1234", id: "3", numberPhone: "1234567890")
+
+## Executando o Projeto
+
+Para executar o projeto localmente, siga estas etapas:
+
+1. Clone o repositório: `git clone https://github.com/seu-usuario/login_app.git`
+2. Instale as dependências: `flutter pub get`
+3. Gere o build para gerar codigos `flutter pub run build_runner build`
+4. Execute o aplicativo: `flutter run`
+
+## Contato
+
+Dúvidas ou sugestões? Entre em contato via e-mail em iamgelson@gmail.com ou abra uma issue no https://github.com/gellmesquita/login_app.
