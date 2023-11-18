@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:login_app/application/resources/app_color.dart';
-import 'package:login_app/application/resources/app_constants.dart';
 import 'package:login_app/application/resources/size_utils.dart';
-import 'package:login_app/domain/entities/activities_entity.dart';
-import 'package:login_app/domain/entities/user_entity.dart';
-import 'package:login_app/presenter/controllers/information_capture_controller.dart';
 import 'package:login_app/presenter/controllers/profile_controller.dart';
-import 'package:login_app/presenter/views/widget/input_text_field.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key, required this.controller});
