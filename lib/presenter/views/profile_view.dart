@@ -55,6 +55,18 @@ class _ProfileViewState extends State<ProfileView> {
             const SizedBox(
               height: DP12,
             ),
+            const CircleAvatar(
+              radius: 50, // Tamanho do círculo
+              backgroundColor: gray400, // Cor de fundo do círculo
+              child: Icon(
+                Icons.person, // Ícone de usuário
+                size: 50, // Tamanho do ícone
+                color: Colors.white, // Cor do ícone
+              ),
+            ),
+            const SizedBox(
+              height: DP12,
+            ),
             Observer(
               builder: (context) => Column(
                 children: [
@@ -71,6 +83,17 @@ class _ProfileViewState extends State<ProfileView> {
             const SizedBox(
               height: DP30,
             ),
+            const Text(
+              "Ao terminar sua secção elimina todos os seus registros de actividades.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 12,
+                color: gray500
+              ),
+            ),
+            const SizedBox(
+              height: DP12,
+            ),
             Container(
               padding: EdgeInsets.all(DP12),
               child: InkWell(
@@ -83,7 +106,8 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                 ),
               ),
-            )
+            ),
+            
           ],
         ),
       ),
