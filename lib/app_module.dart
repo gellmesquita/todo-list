@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:login_app/application/resources/app_routes.dart' as Routes;
 import 'package:login_app/application/services/navigation_service_imp.dart';
@@ -34,6 +35,7 @@ class AppModule extends Module{
 
   @override
   void routes(r) {
+    Modular.setInitialRoute(Routes.activityRoute);
     r.child(
       Routes.activityRoute, 
       child: (context) => InformationCaptureView(controller: Modular.get()),
@@ -44,6 +46,7 @@ class AppModule extends Module{
       Routes.loginRoute, 
       child: (context) => LoginView(controller: Modular.get()),
       transition: TransitionType.rightToLeft,
+      //guards: [AuthGuard()]
     );
     r.child(
       Routes.profileRoute, 
@@ -113,6 +116,7 @@ class AuthGuard extends RouteGuard{
   Future<bool> canActivate(String path, ModularRoute router)async {
     var user =await UserPreferences.doesUserExist();
     if (user) {
+      Modular.to.navigate(Routes.activityRoute);
       return true;
     } else {
       return false;

@@ -189,11 +189,12 @@ class _LoginViewState extends State<LoginView> {
 
   void openUrl() async {
     const url = 'https://www.google.com';
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      throw 'Could not launch $url';
-    }
+    await launchUrl(Uri.parse(url));
+    // if (await canLaunchUrl(Uri.parse(url))) {
+    //   await launchUrl(Uri.parse(url));
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
   }
   
   Widget inputTextField({

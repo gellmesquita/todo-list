@@ -71,6 +71,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
                 children: [
                   InputTextField(
                     onChanged: (p0) { },
+                    maxLength: 200,
                     onSubmit: (p0) {
                       _checkIfTextFilled();
                     },
@@ -300,6 +301,7 @@ class _InformationCaptureViewState extends State<InformationCaptureView> {
             child: Column(
               children: [
                 InputTextField(
+                  maxLength: 200,
                   onChanged: (p0) {},
                   label: "Editar actividade nº ${activity.id}",
                   controller: textController,

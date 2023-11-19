@@ -26,7 +26,7 @@ abstract class _LoginControllerBase with Store {
   bool isLoading= false;
 
   @observable
-  bool visiblePassword= false;
+  bool visiblePassword= true;
 
 
   @observable

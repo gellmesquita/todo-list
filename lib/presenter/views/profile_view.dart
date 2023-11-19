@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:login_app/application/resources/app_color.dart';
-import 'package:login_app/application/resources/app_constants.dart';
 import 'package:login_app/application/resources/size_utils.dart';
-import 'package:login_app/domain/entities/activities_entity.dart';
-import 'package:login_app/domain/entities/user_entity.dart';
-import 'package:login_app/presenter/controllers/information_capture_controller.dart';
 import 'package:login_app/presenter/controllers/profile_controller.dart';
-import 'package:login_app/presenter/views/widget/input_text_field.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key, required this.controller});
@@ -60,6 +55,18 @@ class _ProfileViewState extends State<ProfileView> {
             const SizedBox(
               height: DP12,
             ),
+            const CircleAvatar(
+              radius: 50, // Tamanho do círculo
+              backgroundColor: gray400, // Cor de fundo do círculo
+              child: Icon(
+                Icons.person, // Ícone de usuário
+                size: 50, // Tamanho do ícone
+                color: Colors.white, // Cor do ícone
+              ),
+            ),
+            const SizedBox(
+              height: DP12,
+            ),
             Observer(
               builder: (context) => Column(
                 children: [
@@ -76,6 +83,17 @@ class _ProfileViewState extends State<ProfileView> {
             const SizedBox(
               height: DP30,
             ),
+            const Text(
+              "Ao terminar sua secção elimina todos os seus registros de actividades.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 12,
+                color: gray500
+              ),
+            ),
+            const SizedBox(
+              height: DP12,
+            ),
             Container(
               padding: EdgeInsets.all(DP12),
               child: InkWell(
@@ -88,7 +106,8 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                 ),
               ),
-            )
+            ),
+            
           ],
         ),
       ),
