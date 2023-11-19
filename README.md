@@ -36,7 +36,7 @@ Para facilitar o ambiente de teste, o projeto utiliza dados mockados de usuário
 
 Para executar o projeto localmente, siga estas etapas:
 
-1. Clone o repositório: `git clone https://github.com/seu-usuario/login_app.git`
+1. Clone o repositório: `git clone https://github.com/gellmesquita/login_app.git`
 2. Instale as dependências: `flutter pub get`
 3. Gere o build para gerar codigos `flutter pub run build_runner build`
 4. Execute o aplicativo: `flutter run`
