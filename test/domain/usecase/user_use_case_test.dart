@@ -19,7 +19,7 @@ void main() {
       activityPreferences: ActivityPreferences()
     ) 
   );
-  test('verificar login use case imp', () async{
+  test('verificar login use case', () async{
     final result = await usecase.login(name: "Gelson", password: "12345678");
     expect(result, isA<UserEntity>());
   });
